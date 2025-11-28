@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limpar Carrinho - TireGrip</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background-color: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 8px;
+        }
+        h1 {
+            color: #FF6B00;
+            margin-bottom: 1rem;
+        }
+        button {
+            background-color: #FF6B00;
+            color: #000;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0.5rem;
+            text-transform: uppercase;
+        }
+        button:hover {
+            background-color: #FFD000;
+        }
+        .back-btn {
+            background-color: #333;
+            color: #fff;
+        }
+        .back-btn:hover {
+            background-color: #555;
+        }
+        .message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #065f46;
+            color: #d1fae5;
+        }
+        .error {
+            background-color: #7f1d1d;
+            color: #fecaca;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Limpar Carrinho</h1>
+        <p>Deseja remover todos os itens do seu carrinho?</p>
+        <button onclick="limparCarrinho()">Limpar Carrinho</button>
+        <button class="back-btn" onclick="window.location.href='cart.html'">Voltar</button>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        async function limparCarrinho() {
+            try {
+                const response = await fetch('carrinho/limpar.jsp', {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                const messageDiv = document.getElementById('message');
+                
+                if (data.success) {
+                    messageDiv.className = 'message success';
+                    messageDiv.textContent = 'Carrinho limpo com sucesso!';
+                    setTimeout(() => {
+                        window.location.href = 'cart.html';
+                    }, 1500);
+                } else {
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = 'Erro ao limpar carrinho: ' + (data.message || data.error);
+                }
+            } catch (error) {
+                const messageDiv = document.getElementById('message');
+                messageDiv.className = 'message error';
+                messageDiv.textContent = 'Erro ao limpar carrinho: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

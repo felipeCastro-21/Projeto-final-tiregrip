@@ -1,0 +1,722 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho - TireGrip</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Reset e configurações gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: black;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header Section */
+        .cart-header {
+            margin-bottom: 2rem;
+            padding-top: 3rem;
+        }
+
+        .cart-title {
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            font-size: 2rem;
+        }
+
+        .cart-title-highlight {
+            color: #FF6B00;
+        }
+
+        .title-divider {
+            height: 0.25rem;
+            width: 6rem;
+            background-color: #FF6B00;
+        }
+
+        /* Empty Cart State */
+        .empty-cart {
+            text-align: center;
+            max-width: 28rem;
+            margin: 4rem auto;
+            padding: 3rem 0;
+        }
+
+        .empty-cart-icon {
+            width: 6rem;
+            height: 6rem;
+            color: #333333;
+            margin: 0 auto 1.5rem;
+        }
+
+        .empty-cart-title {
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            font-size: 1.5rem;
+        }
+
+        .empty-cart-text {
+            color: #9CA3AF;
+            margin-bottom: 2rem;
+        }
+
+        .continue-shopping-btn {
+            background-color: #FF6B00;
+            color: black;
+            padding: 1rem 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .continue-shopping-btn:hover {
+            background-color: #FFD000;
+        }
+
+        /* Cart Content */
+        .cart-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            padding: 3rem 0;
+        }
+
+        @media (min-width: 1024px) {
+            .cart-content {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        /* Cart Items */
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .cart-item {
+            background-color: #1A1A1A;
+            border: 2px solid #333333;
+            padding: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .item-image {
+            width: 8rem;
+            height: 8rem;
+            background-color: black;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .item-info h3 {
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-model {
+            color: #9CA3AF;
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Quantity Controls */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            background-color: #333333;
+            color: white;
+            padding: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-btn:hover {
+            background-color: #FF6B00;
+            color: black;
+        }
+
+        .quantity-btn svg {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .quantity-display {
+            color: white;
+            width: 3rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .item-price {
+            color: #FF6B00;
+            font-weight: 800;
+            font-size: 1.25rem;
+        }
+
+        .remove-btn {
+            color: #9CA3AF;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .remove-btn:hover {
+            color: #EF4444;
+        }
+
+        .remove-btn svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background-color: #1A1A1A;
+            border: 2px solid #333333;
+            padding: 1.5rem;
+            position: sticky;
+            top: 6rem;
+        }
+
+        .summary-title {
+            color: #FF6B00;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        .summary-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .summary-label {
+            color: #9CA3AF;
+        }
+
+        .summary-value {
+            color: white;
+        }
+
+        .summary-divider {
+            border-top: 2px solid #333333;
+            padding-top: 1rem;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-label {
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 700;
+        }
+
+        .total-value {
+            color: #FF6B00;
+            font-weight: 800;
+            font-size: 1.5rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background-color: #FF6B00;
+            color: black;
+            padding: 1rem 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 0.75rem;
+        }
+
+        .checkout-btn:hover {
+            background-color: #FFD000;
+        }
+
+        .continue-btn {
+            width: 100%;
+            background-color: transparent;
+            border: 2px solid #333333;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .continue-btn:hover {
+            border-color: #FF6B00;
+            color: #FF6B00;
+        }
+
+        /* Footer Placeholder */
+        .footer {
+            background-color: #1A1A1A;
+            border-top: 2px solid #333;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            text-align: center;
+            color: #9CA3AF;
+        }
+    </style>
+</head>
+<body>
+    <div id="cart-container">
+        
+    </div>
+
+    <script>
+        // Carregar carrinho do banco de dados
+        async function carregarCarrinho() {
+            try {
+                const response = await fetch('carrinho/visualizar.jsp');
+                const data = await response.json();
+                
+                if (data.error) {
+                    // Usuário não autenticado
+                    window.location.href = 'index.html';
+                    return;
+                }
+                
+                const items = data.itens || [];
+                renderCart(items, data.subtotal || 0);
+                
+            } catch (error) {
+                console.error('Erro ao carregar carrinho:', error);
+                renderCart([], 0);
+            }
+        }
+
+        // Função para renderizar o carrinho
+        function renderCart(items, subtotalCarrinho) {
+            const container = document.getElementById('cart-container');
+            const subtotal = subtotalCarrinho || 0;
+            const shipping = subtotal > 0 ? 50.0 : 0;
+            const total = subtotal + shipping;
+            
+            // Calcular quantidade total de itens
+            const totalItems = items ? items.reduce((sum, item) => sum + (item.quantidade || 0), 0) : 0;
+
+            if (items.length === 0) {
+                container.innerHTML = `
+                <header class="header">
+                        <div class="container">
+                            <div class="header-content">
+                                
+                                <button class="logo-button" id="home-button">
+                                    <span class="logo-text-white">TIRE</span>
+                                    <span class="logo-text-orange">GRIP</span>
+                                </button>
+
+                                
+                                <nav class="desktop-nav">
+                                    <a style="text-decoration: none" class="nav-button" href="home.html">Produtos</a>
+                                </nav>
+
+                                
+                                <a href="./cart.html" class="cart-button" id="cart-button">
+                                    <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <circle cx="9" cy="21" r="1" stroke-width="2.5" />
+                                        <circle cx="20" cy="21" r="1" stroke-width="2.5" />
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke-width="2.5" />
+                                    </svg>
+                                    <span class="cart-badge" id="cart-badge">${totalItems}</span>
+                                </a>
+
+                                
+                                <button class="mobile-menu-button">
+                                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <line x1="3" y1="6" x2="21" y2="6" stroke-width="2.5" />
+                                        <line x1="3" y1="12" x2="21" y2="12" stroke-width="2.5" />
+                                        <line x1="3" y1="18" x2="21" y2="18" stroke-width="2.5" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="empty-cart">
+                        <svg class="empty-cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" stroke-width="2.5"/>
+                            <line x1="3" y1="6" x2="21" y2="6" stroke-width="2.5"/>
+                            <path d="M16 10a4 4 0 0 1-8 0" stroke-width="2.5"/>
+                        </svg>
+                        <h2 class="empty-cart-title">Seu carrinho está vazio</h2>
+                        <p class="empty-cart-text">Adicione produtos ao seu carrinho para continuar</p>
+                        <button class="continue-shopping-btn" onclick="continueShopping()">
+                            Continuar Comprando
+                        </button>
+                    </div>
+                    <footer class="footer" id="footer">
+                        <div class="container footer-container">
+                            <div class="footer-grid">
+                                
+                                <div class="footer-section">
+                                    <h3 class="footer-title">Contato</h3>
+                                    <div class="contact-info">
+                                        <p>Email: contato@tiregrip.com</p>
+                                        <p>Tel: (11) 9999-9999</p>
+                                        <p>WhatsApp: (11) 98888-8888</p>
+                                        <p class="business-hours">Seg-Sex: 8h às 18h</p>
+                                        <p>Sáb: 8h às 14h</p>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="footer-section">
+                                    <h3 class="footer-title">Links Úteis</h3>
+                                    <ul class="footer-links">
+                                        <li><a href="#" class="footer-link">FAQ</a></li>
+                                        <li><a href="#" class="footer-link">Sobre Nós</a></li>
+                                        <li><a href="#" class="footer-link">Política de Privacidade</a></li>
+                                        <li><a href="#" class="footer-link">Termos de Uso</a></li>
+                                        <li><a href="#" class="footer-link">Garantia</a></li>
+                                    </ul>
+                                </div>
+
+                                
+                                <div class="footer-section">
+                                    <h3 class="footer-title">Newsletter</h3>
+                                    <p class="newsletter-text">Receba ofertas exclusivas e novidades</p>
+                                    <div class="newsletter-form">
+                                        <input type="email" placeholder="Seu e-mail" class="newsletter-input">
+                                        <button class="newsletter-button">Assinar</button>
+                                    </div>
+                                </div>
+
+                                
+
+                            </div>
+
+                            
+                            <div class="footer-bottom">
+                                <p>© 2025 TireGrip. Todos os direitos reservados.</p>
+                            </div>
+                        </div>
+                    </footer>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+            <header class="header">
+                        <div class="container">
+                            <div class="header-content">
+                                
+                                <button class="logo-button" id="home-button">
+                                    <span class="logo-text-white">TIRE</span>
+                                    <span class="logo-text-orange">GRIP</span>
+                                </button>
+
+                                
+                                <nav class="desktop-nav">
+                                    <a style="text-decoration: none" class="nav-button" href="home.html">Produtos</a>
+                                </nav>
+
+                                
+                                <a href="./cart.html" class="cart-button" id="cart-button">
+                                    <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <circle cx="9" cy="21" r="1" stroke-width="2.5" />
+                                        <circle cx="20" cy="21" r="1" stroke-width="2.5" />
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke-width="2.5" />
+                                    </svg>
+                                    <span class="cart-badge" id="cart-badge">${totalItems}</span>
+                                </a>
+
+                                
+                                <button class="mobile-menu-button">
+                                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <line x1="3" y1="6" x2="21" y2="6" stroke-width="2.5" />
+                                        <line x1="3" y1="12" x2="21" y2="12" stroke-width="2.5" />
+                                        <line x1="3" y1="18" x2="21" y2="18" stroke-width="2.5" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </header>
+                <div class="container">
+                    
+                    <div class="cart-header">
+                        <h1 class="cart-title">Meu <span class="cart-title-highlight">Carrinho</span></h1>
+                        <div class="title-divider"></div>
+                    </div>
+
+                    
+                    <div class="cart-content">
+                        
+                        <div class="cart-items">
+                            ${items.map(item => `
+                                <div class="cart-item" data-item-id="${item.id}">
+                                    
+                                    <div class="item-image">
+                                        <img src="https://images.unsplash.com/photo-1692464269951-3907a58b059e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXIlMjB0aXJlJTIwYmxhY2t8ZW58MXx8fHwxNzY0MTEzMDYyfDA&ixlib=rb-4.1.0&q=80&w=1080">
+                                    </div>
+
+                                    
+                                    <div class="item-details">
+                                        <div class="item-info">
+                                            <h3>${item.produtoNome || item.name}</h3>
+                                            <p class="item-model">${item.produtoModelo || item.model}</p>
+                                        </div>
+                                        <div class="item-controls">
+                                            
+                                            <div class="quantity-controls">
+                                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantidade - 1}, ${item.produtoPreco || item.price})">
+                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                        <line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5"/>
+                                                    </svg>
+                                                </button>
+                                                <span class="quantity-display">${item.quantidade || item.quantity}</span>
+                                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantidade + 1}, ${item.produtoPreco || item.price})">
+                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                        <line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5"/>
+                                                        <line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+
+                                            
+                                            <p class="item-price">R$ ${(item.subtotal || (item.price * item.quantity)).toFixed(2)}</p>
+
+                                            
+                                            <button class="remove-btn" onclick="removeItem(${item.id})" aria-label="Remover item">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                    <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-width="2.5"/>
+                                                    <line x1="10" y1="11" x2="10" y2="17" stroke-width="2.5"/>
+                                                    <line x1="14" y1="11" x2="14" y2="17" stroke-width="2.5"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        
+                        <div class="order-summary">
+                            <h2 class="summary-title">Resumo do Pedido</h2>
+
+                            <div class="summary-details">
+                                <div class="summary-row">
+                                    <span class="summary-label">Subtotal</span>
+                                    <span class="summary-value">R$ ${subtotal.toFixed(2)}</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="summary-label">Frete</span>
+                                    <span class="summary-value">R$ ${shipping.toFixed(2)}</span>
+                                </div>
+                                <div class="summary-divider">
+                                    <div class="total-row">
+                                        <span class="total-label">Total</span>
+                                        <span class="total-value">R$ ${total.toFixed(2)}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="checkout-btn" onclick="checkout()">
+                                Finalizar Compra
+                            </button>
+
+                            <button class="continue-btn" onclick="continueShopping()">
+                                Continuar Comprando
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="footer" id="footer">
+                        <div class="container footer-container">
+                            <div class="footer-grid">
+                                
+                                <div class="footer-section">
+                                    <h3 class="footer-title">Contato</h3>
+                                    <div class="contact-info">
+                                        <p>Email: contato@tiregrip.com</p>
+                                        <p>Tel: (11) 9999-9999</p>
+                                        <p>WhatsApp: (11) 98888-8888</p>
+                                        <p class="business-hours">Seg-Sex: 8h às 18h</p>
+                                        <p>Sáb: 8h às 14h</p>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="footer-section">
+                                    <h3 class="footer-title">Links Úteis</h3>
+                                    <ul class="footer-links">
+                                        <li><a href="#" class="footer-link">FAQ</a></li>
+                                        <li><a href="#" class="footer-link">Sobre Nós</a></li>
+                                        <li><a href="#" class="footer-link">Política de Privacidade</a></li>
+                                        <li><a href="#" class="footer-link">Termos de Uso</a></li>
+                                        <li><a href="#" class="footer-link">Garantia</a></li>
+                                    </ul>
+                                </div>
+
+                                
+                                <div class="footer-section">
+                                    <h3 class="footer-title">Newsletter</h3>
+                                    <p class="newsletter-text">Receba ofertas exclusivas e novidades</p>
+                                    <div class="newsletter-form">
+                                        <input type="email" placeholder="Seu e-mail" class="newsletter-input">
+                                        <button class="newsletter-button">Assinar</button>
+                                    </div>
+                                </div>
+
+                                
+
+                            </div>
+
+                            
+                            <div class="footer-bottom">
+                                <p>© 2025 TireGrip. Todos os direitos reservados.</p>
+                            </div>
+                        </div>
+                    </footer>
+            `;
+        }
+
+        // Funções de manipulação do carrinho
+        async function updateQuantity(itemId, newQuantity, preco) {
+            if (newQuantity < 1) {
+                removeItem(itemId);
+                return;
+            }
+            
+            try {
+                const response = await fetch('carrinho/atualizar.jsp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `id=${itemId}&quantidade=${newQuantity}`
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    carregarCarrinho(); // Recarregar carrinho
+                } else {
+                    alert('Erro ao atualizar quantidade');
+                }
+            } catch (error) {
+                console.error('Erro ao atualizar quantidade:', error);
+                alert('Erro ao atualizar quantidade');
+            }
+        }
+
+        async function removeItem(itemId) {
+            if (!confirm('Deseja remover este item do carrinho?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('carrinho/remover.jsp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `id=${itemId}`
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    carregarCarrinho(); // Recarregar carrinho
+                } else {
+                    alert('Erro ao remover item');
+                }
+            } catch (error) {
+                console.error('Erro ao remover item:', error);
+                alert('Erro ao remover item');
+            }
+        }
+
+        function checkout() {
+            window.location.href = "checkout.html";
+        }
+
+        function continueShopping() {
+             window.location.href = "home.html";
+        }
+
+        // Inicializar o carrinho
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarCarrinho(); // Carregar do banco de dados
+        });
+    </script>
+</body>
+</html>

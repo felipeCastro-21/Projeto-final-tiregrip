@@ -1,0 +1,341 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Máxima - Pneus</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            
+            <button class="logo-button" id="home-button">
+                <span class="logo-text-white">TIRE</span>
+                <span class="logo-text-orange">GRIP</span>
+            </button>
+
+            
+            <nav class="desktop-nav">
+                <a style="text-decoration: none" class="nav-button" href="#products-section">Produtos</a>
+                <a style="text-decoration: none" class="nav-button" href="#footer">Contato</a>
+            </nav>
+
+            
+            <a href="./cart.html" class="cart-button" id="cart-button">
+                <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="9" cy="21" r="1" stroke-width="2.5" />
+                    <circle cx="20" cy="21" r="1" stroke-width="2.5" />
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke-width="2.5" />
+                </svg>
+                <span class="cart-badge" id="cart-badge">0</span>
+            </a>
+
+            
+            <button class="mobile-menu-button">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <line x1="3" y1="6" x2="21" y2="6" stroke-width="2.5" />
+                    <line x1="3" y1="12" x2="21" y2="12" stroke-width="2.5" />
+                    <line x1="3" y1="18" x2="21" y2="18" stroke-width="2.5" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</header>
+
+<body>
+    
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>
+                    PERFORMANCE<br>
+                    <span class="highlight">MÁXIMA</span> NA ESTRADA
+                </h1>
+                <p>
+                    Pneus de alta qualidade com tecnologia de ponta para garantir sua segurança e desempenho em qualquer
+                    terreno.
+                </p>
+                <a href="#products-section" class="cta-button">
+                    Ver Produtos
+                </a>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                
+                <div class="feature-card">
+                    <div class="feature-icon orange">
+                        
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="2.5" />
+                        </svg>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Garantia Total</h3>
+                        <p>12 meses de garantia em todos os produtos</p>
+                    </div>
+                </div>
+
+                
+                <div class="feature-card">
+                    <div class="feature-icon orange">
+                        
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke-width="2.5" />
+                        </svg>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Entrega Rápida</h3>
+                        <p>Receba em até 48h após a confirmação</p>
+                    </div>
+                </div>
+
+                
+                <div class="feature-card">
+                    <div class="feature-icon yellow">
+                        
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path
+                                d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+                                stroke-width="2.5" />
+                            <line x1="12" y1="9" x2="12" y2="13" stroke-width="2.5" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" stroke-width="2.5" />
+                        </svg>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Máxima Segurança</h3>
+                        <p>Produtos certificados e testados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section id="products-section" class="products">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nossos <span class="highlight">Produtos</span></h2>
+                <div class="divider"></div>
+            </div>
+
+            
+            <div class="products-grid" id="products-container">
+                <p style="text-align: center; color: #9CA3AF;">Carregando produtos...</p>
+            </div>
+        </div>
+    </section>
+
+    
+    <footer class="footer" id="footer">
+        <div class="container footer-container">
+            <div class="footer-grid">
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Contato</h3>
+                    <div class="contact-info">
+                        <p>Email: contato@tiregrip.com</p>
+                        <p>Tel: (11) 9999-9999</p>
+                        <p>WhatsApp: (11) 98888-8888</p>
+                        <p class="business-hours">Seg-Sex: 8h às 18h</p>
+                        <p>Sáb: 8h às 14h</p>
+                    </div>
+                </div>
+
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Links Úteis</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link">FAQ</a></li>
+                        <li><a href="#" class="footer-link">Sobre Nós</a></li>
+                        <li><a href="#" class="footer-link">Política de Privacidade</a></li>
+                        <li><a href="#" class="footer-link">Termos de Uso</a></li>
+                        <li><a href="#" class="footer-link">Garantia</a></li>
+                    </ul>
+                </div>
+
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Newsletter</h3>
+                    <p class="newsletter-text">Receba ofertas exclusivas e novidades</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Seu e-mail" class="newsletter-input">
+                        <button class="newsletter-button">Assinar</button>
+                    </div>
+                </div>
+
+                
+
+            </div>
+
+            
+            <div class="footer-bottom">
+                <p>© 2025 TireGrip. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+<script>
+// Mapeamento de imagens por Modelo (imagens locais)
+const IMAGENS_PNEUS = {
+    'Modelo Sport 2024': 'images/produtos/pneu-sport-2024.jpg',
+    'Modelo Adventure Pro': 'images/produtos/pneu-adventure-pro.jpg',
+    'Modelo Eco 2024': 'images/produtos/pneu-default.jpg',
+    'Modelo Luxury Ride': 'images/produtos/pneu-luxury-ride.jpg',
+    'Modelo Multi-Surface': 'images/produtos/pneu-multi-surface.jpg',
+    'Modelo Track Pro': 'images/produtos/pneu-track-pro.jpg'
+};
+
+// Imagem padrão de pneu (caso o modelo não esteja no mapeamento)
+const DEFAULT_IMAGE = 'images/produtos/pneu-default.jpg';
+
+// Carregar produtos do banco de dados
+async function carregarProdutos() {
+    try {
+        const response = await fetch('produtos/listar.jsp');
+        const produtos = await response.json();
+        
+        const container = document.getElementById('products-container');
+        
+        if (!produtos || produtos.length === 0) {
+            container.innerHTML = '<p style="text-align: center; color: #9CA3AF;">Nenhum produto encontrado.</p>';
+            return;
+        }
+        
+        container.innerHTML = '';
+        
+        produtos.forEach(produto => {
+            const card = criarCardProduto(produto);
+            container.appendChild(card);
+        });
+        
+        // Adicionar event listeners aos botões
+        adicionarEventListeners();
+        
+    } catch (error) {
+        console.error('Erro ao carregar produtos:', error);
+        document.getElementById('products-container').innerHTML = 
+            '<p style="text-align: center; color: #EF4444;">Erro ao carregar produtos. Verifique se o servidor está rodando.</p>';
+    }
+}
+
+// Criar card de produto
+function criarCardProduto(produto) {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    
+    card.innerHTML = `
+        <a href="./details.html?id=${produto.id}">
+            <img src="${DEFAULT_IMAGE}" alt="${produto.nome}">
+        </a>
+        <div class="content">
+            <div class="content-text">
+                <h3>${produto.nome}</h3>
+                <p class="model">${produto.modelo}</p>
+                <p class="price">R$ ${produto.preco.toFixed(2)}</p>
+            </div>
+            <div class="product-buttons">
+                <button class="cart-btn add-to-cart" data-produto-id="${produto.id}" data-produto-preco="${produto.preco}">
+                    <span>
+                        <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="black">
+                            <circle cx="9" cy="21" r="1" stroke-width="2.5" />
+                            <circle cx="20" cy="21" r="1" stroke-width="2.5" />
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke-width="2.5" />
+                        </svg>
+                    </span>
+                    ADICIONAR AO CARRINHO
+                </button>
+            </div>
+        </div>
+    `;
+    
+    return card;
+}
+
+// Adicionar ao carrinho (envia para o backend)
+async function adicionarAoCarrinho(produtoId, preco) {
+    try {
+        const formData = new URLSearchParams();
+        formData.append('produtoId', produtoId);
+        formData.append('quantidade', '1');
+        
+        const response = await fetch('carrinho/adicionar.jsp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            // Recarregar quantidade real do carrinho
+            await carregarQuantidadeCarrinho();
+            
+            // Feedback visual
+            alert('Produto adicionado ao carrinho!');
+        } else {
+            alert('Erro ao adicionar produto: ' + result.message);
+        }
+        
+    } catch (error) {
+        console.error('Erro ao adicionar ao carrinho:', error);
+        alert('Erro ao adicionar produto ao carrinho. Faça login primeiro!');
+    }
+}
+
+// Adicionar event listeners aos botões
+function adicionarEventListeners() {
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const produtoId = this.getAttribute('data-produto-id');
+            const preco = this.getAttribute('data-produto-preco');
+            
+            // Feedback visual imediato
+            this.style.backgroundColor = '#ff6a0080';
+            setTimeout(() => {
+                this.style.backgroundColor = '';
+            }, 300);
+            
+            // Adicionar ao carrinho no backend
+            adicionarAoCarrinho(produtoId, preco);
+        });
+    });
+}
+
+// Carregar quantidade de itens no carrinho
+async function carregarQuantidadeCarrinho() {
+    try {
+        const response = await fetch('carrinho/visualizar.jsp');
+        const data = await response.json();
+        
+        if (!data.error && data.itens) {
+            const totalItems = data.itens.reduce((sum, item) => sum + (item.quantidade || 0), 0);
+            const cartBadge = document.getElementById('cart-badge');
+            if (cartBadge) {
+                cartBadge.textContent = totalItems;
+            }
+        }
+    } catch (error) {
+        console.error('Erro ao carregar quantidade do carrinho:', error);
+    }
+}
+
+// Carregar produtos quando a página carregar
+document.addEventListener('DOMContentLoaded', function() {
+    carregarProdutos();
+    carregarQuantidadeCarrinho();
+});
+</script>
+
+</html>

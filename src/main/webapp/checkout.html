@@ -1,0 +1,810 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - TireGrip</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Reset e configurações gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: black;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header Section */
+        .checkout-header {
+            margin-bottom: 2rem;
+            padding-top: 3rem;
+        }
+
+        .checkout-title {
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            font-size: 2rem;
+        }
+
+        .checkout-title-highlight {
+            color: #FF6B00;
+        }
+
+        .title-divider {
+            height: 0.25rem;
+            width: 6rem;
+            background-color: #FF6B00;
+        }
+
+        /* Progress Indicator */
+        .progress-steps {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .step-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .step-circle {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid;
+            transition: all 0.3s;
+            font-weight: 800;
+        }
+
+        .step-circle.active {
+            background-color: #FF6B00;
+            border-color: #FF6B00;
+            color: black;
+        }
+
+        .step-circle.inactive {
+            background-color: transparent;
+            border-color: #333333;
+            color: #6B7280;
+        }
+
+        .step-label {
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 0.75rem;
+            transition: color 0.3s;
+        }
+
+        .step-label.active {
+            color: #FF6B00;
+        }
+
+        .step-label.inactive {
+            color: #6B7280;
+        }
+
+        .step-connector {
+            width: 6rem;
+            height: 0.125rem;
+            margin: 0 1rem;
+        }
+
+        .step-connector.active {
+            background-color: #FF6B00;
+        }
+
+        .step-connector.inactive {
+            background-color: #333333;
+        }
+
+        /* Content Grid */
+        .checkout-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 1024px) {
+            .checkout-content {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        /* Form Sections */
+        .form-section {
+            background-color: #1A1A1A;
+            border: 2px solid #333333;
+            padding: 1.5rem;
+        }
+
+        .section-title {
+            color: #FF6B00;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        /* Form Styles */
+        .checkout-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            color: #9CA3AF;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .form-input {
+            background-color: black;
+            color: white;
+            padding: 0.75rem 1rem;
+            border: 2px solid #333333;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: #FF6B00;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 1rem 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 800;
+        }
+
+        .btn-primary {
+            background-color: #FF6B00;
+            color: black;
+        }
+
+        .btn-primary:hover {
+            background-color: #FFD000;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid #333333;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            border-color: #FF6B00;
+            color: #FF6B00;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .button-group .btn {
+            flex: 1;
+        }
+
+        /* Order Items */
+        .order-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .order-item {
+            display: flex;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333333;
+        }
+
+        .item-image {
+            width: 5rem;
+            height: 5rem;
+            background-color: black;
+            flex-shrink: 0;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-info {
+            color: #9CA3AF;
+        }
+
+        .item-price {
+            color: #FF6B00;
+            font-weight: 700;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-method {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: none;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .payment-method.selected {
+            border-color: #FF6B00;
+            background-color: black;
+        }
+
+        .payment-method:not(.selected) {
+            border-color: #333333;
+            background-color: transparent;
+        }
+
+        .payment-method:not(.selected):hover {
+            border-color: #FF6B00;
+        }
+
+        .payment-icon {
+            padding: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-icon.credit {
+            background-color: #333333;
+        }
+
+        .payment-icon.credit.selected {
+            background-color: #FF6B00;
+        }
+
+        .payment-icon.pix {
+            background-color: #333333;
+        }
+
+        .payment-icon.pix.selected {
+            background-color: #FFD000;
+        }
+
+        .payment-icon svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        .payment-icon.credit.selected svg {
+            color: black;
+        }
+
+        .payment-icon.pix.selected svg {
+            color: black;
+        }
+
+        .payment-icon:not(.selected) svg {
+            color: white;
+        }
+
+        .payment-info h3 {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .payment-info p {
+            color: #9CA3AF;
+        }
+
+        .payment-discount {
+            color: #FFD000 !important;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background-color: #1A1A1A;
+            border: 2px solid #333333;
+            padding: 1.5rem;
+            position: sticky;
+            top: 6rem;
+        }
+
+        .summary-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .summary-label {
+            color: #9CA3AF;
+        }
+
+        .summary-value {
+            color: white;
+        }
+
+        .summary-divider {
+            border-top: 2px solid #333333;
+            padding-top: 1rem;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-label {
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 700;
+        }
+
+        .total-value {
+            color: #FF6B00;
+            font-weight: 800;
+            font-size: 1.5rem;
+        }
+
+        .discount-row {
+            color: #FFD000;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #1A1A1A;
+            border-top: 2px solid #333;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            text-align: center;
+            color: #9CA3AF;
+        }
+    </style>
+</head>
+<body>
+    <div id="checkout-container">
+        
+    </div>
+
+    <script>
+        // Dados de exemplo do carrinho
+        const checkoutItems = [
+            {
+                id: 1,
+                name: "Pneu Performance",
+                model: "Modelo Sport 2024",
+                price: 299.99,
+                image: "https://via.placeholder.com/300x300/333/666?text=Pneu",
+                quantity: 2
+            },
+            {
+                id: 2,
+                name: "Pneu Off-road",
+                model: "Modelo Adventure Pro",
+                price: 399.99,
+                image: "https://via.placeholder.com/300x300/333/666?text=Pneu+Offroad",
+                quantity: 1
+            }
+        ];
+
+        // Estado do checkout
+        let currentStep = 1;
+        let paymentMethod = null;
+
+        // Função para calcular totais
+        function calculateTotals() {
+            const subtotal = checkoutItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            const shipping = 50.0;
+            const total = subtotal + shipping;
+            const discount = paymentMethod === 'pix' ? total * 0.05 : 0;
+            const finalTotal = total - discount;
+
+            return { subtotal, shipping, total, discount, finalTotal };
+        }
+
+        // Função para renderizar o checkout
+        function renderCheckout() {
+            const container = document.getElementById('checkout-container');
+            const { subtotal, shipping, total, discount, finalTotal } = calculateTotals();
+
+            const steps = [
+                { number: 1, label: 'Endereço' },
+                { number: 2, label: 'Resumo' },
+                { number: 3, label: 'Pagamento' },
+            ];
+
+            container.innerHTML = `
+            <header class="header">
+                        <div class="container">
+                            <div class="header-content">
+                                
+                                <button class="logo-button" id="home-button">
+                                    <span class="logo-text-white">TIRE</span>
+                                    <span class="logo-text-orange">GRIP</span>
+                                </button>
+
+                                
+                                <nav class="desktop-nav">
+                                    <a style="text-decoration: none" class="nav-button" href="home.html">Produtos</a>
+                                </nav>
+
+                                
+                                <a href="./cart.html" class="cart-button" id="cart-button">
+                                    <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <circle cx="9" cy="21" r="1" stroke-width="2.5" />
+                                        <circle cx="20" cy="21" r="1" stroke-width="2.5" />
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke-width="2.5" />
+                                    </svg>
+                                    <span class="cart-badge" id="cart-badge">0</span>
+                                </a>
+
+                                
+                                <button class="mobile-menu-button">
+                                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <line x1="3" y1="6" x2="21" y2="6" stroke-width="2.5" />
+                                        <line x1="3" y1="12" x2="21" y2="12" stroke-width="2.5" />
+                                        <line x1="3" y1="18" x2="21" y2="18" stroke-width="2.5" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </header>
+                <div class="container">
+                    
+                    <div class="checkout-header">
+                        <h1 class="checkout-title">Finalizar <span class="checkout-title-highlight">Pedido</span></h1>
+                        <div class="title-divider"></div>
+                    </div>
+
+                    
+                    <div class="progress-steps">
+                        ${steps.map((step, index) => `
+                            <div class="step-container">
+                                <div class="step">
+                                    <div class="step-circle ${currentStep >= step.number ? 'active' : 'inactive'}">
+                                        ${currentStep > step.number ? 
+                                            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' : 
+                                            step.number
+                                        }
+                                    </div>
+                                    <span class="step-label ${currentStep >= step.number ? 'active' : 'inactive'}">${step.label}</span>
+                                </div>
+                                ${index < steps.length - 1 ? 
+                                    `<div class="step-connector ${currentStep > step.number ? 'active' : 'inactive'}"></div>` : 
+                                    ''
+                                }
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    
+                    <div class="checkout-content">
+                        
+                        <div>
+                            
+                            ${currentStep === 1 ? `
+                                <div class="form-section">
+                                    <h2 class="section-title">Endereço de Entrega</h2>
+                                    <form class="checkout-form" id="address-form">
+                                        <div class="form-grid">
+                                            <div class="form-group">
+                                                <label class="form-label">CEP</label>
+                                                <input type="text" class="form-input" placeholder="00000-000" required>
+                                            </div>
+                                            <div class="form-group full-width">
+                                                <label class="form-label">Rua</label>
+                                                <input type="text" class="form-input" placeholder="Nome da rua" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Número</label>
+                                                <input type="text" class="form-input" placeholder="123" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Complemento</label>
+                                                <input type="text" class="form-input" placeholder="Apto, bloco, etc">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Bairro</label>
+                                                <input type="text" class="form-input" placeholder="Nome do bairro" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Cidade</label>
+                                                <input type="text" class="form-input" placeholder="Nome da cidade" required>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-full" onclick="goToStep(2)">
+                                            Continuar
+                                        </button>
+                                    </form>
+                                </div>
+                            ` : ''}
+
+                            
+                            ${currentStep === 2 ? `
+                                <div class="form-section">
+                                    <h2 class="section-title">Resumo do Pedido</h2>
+                                    <div class="order-items">
+                                        ${checkoutItems.map(item => `
+                                            <div class="order-item">
+                                                <div class="item-image">
+                                                    <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/300x300/333/666?text=Imagem+Indisponível'">
+                                                </div>
+                                                <div class="item-details">
+                                                    <h3 class="item-name">${item.name}</h3>
+                                                    <p class="item-info">${item.model}</p>
+                                                    <p class="item-info">Qtd: ${item.quantity}</p>
+                                                </div>
+                                                <div class="item-price">
+                                                    R$ ${(item.price * item.quantity).toFixed(2)}
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                    <div class="button-group">
+                                        <button type="button" class="btn btn-secondary" onclick="goToStep(1)">
+                                            Voltar
+                                        </button>
+                                        <button type="button" class="btn btn-primary" onclick="goToStep(3)">
+                                            Continuar
+                                        </button>
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            
+                            ${currentStep === 3 ? `
+                                <div class="form-section">
+                                    <h2 class="section-title">Forma de Pagamento</h2>
+                                    
+                                    <div class="payment-methods">
+                                        
+                                        <button class="payment-method ${paymentMethod === 'credit' ? 'selected' : ''}" 
+                                                onclick="setPaymentMethod('credit')">
+                                            <div class="payment-icon credit ${paymentMethod === 'credit' ? 'selected' : ''}">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2" stroke-width="2.5"/>
+                                                    <line x1="1" y1="10" x2="23" y2="10" stroke-width="2.5"/>
+                                                </svg>
+                                            </div>
+                                            <div class="payment-info">
+                                                <h3>Cartão de Crédito</h3>
+                                                <p>Em até 10x sem juros</p>
+                                            </div>
+                                        </button>
+
+                                        
+                                        <button class="payment-method ${paymentMethod === 'pix' ? 'selected' : ''}" 
+                                                onclick="setPaymentMethod('pix')">
+                                            <div class="payment-icon pix ${paymentMethod === 'pix' ? 'selected' : ''}">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" stroke-width="2.5"/>
+                                                    <line x1="12" y1="18" x2="12" y2="18" stroke-width="2.5"/>
+                                                </svg>
+                                            </div>
+                                            <div class="payment-info">
+                                                <h3>PIX</h3>
+                                                <p class="payment-discount">5% de desconto</p>
+                                            </div>
+                                        </button>
+                                    </div>
+
+                                    <div class="button-group">
+                                        <button type="button" class="btn btn-secondary" onclick="goToStep(2)">
+                                            Voltar
+                                        </button>
+                                        <button type="button" class="btn btn-primary" onclick="completeOrder()" 
+                                                ${!paymentMethod ? 'disabled' : ''}>
+                                            Finalizar Pedido
+                                        </button>
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        
+                        <div>
+                            <div class="order-summary">
+                                <h2 class="section-title">Resumo</h2>
+                                <div class="summary-details">
+                                    <div class="summary-row">
+                                        <span class="summary-label">Subtotal</span>
+                                        <span class="summary-value">R$ ${subtotal.toFixed(2)}</span>
+                                    </div>
+                                    <div class="summary-row">
+                                        <span class="summary-label">Frete</span>
+                                        <span class="summary-value">R$ ${shipping.toFixed(2)}</span>
+                                    </div>
+                                    ${paymentMethod === 'pix' ? `
+                                        <div class="summary-row discount-row">
+                                            <span>Desconto PIX (5%)</span>
+                                            <span>- R$ ${discount.toFixed(2)}</span>
+                                        </div>
+                                    ` : ''}
+                                    <div class="summary-divider">
+                                        <div class="total-row">
+                                            <span class="total-label">Total</span>
+                                            <span class="total-value">R$ ${finalTotal.toFixed(2)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="footer" id="footer">
+                        <div class="container footer-container">
+                            <div class="footer-grid">
+                                
+                                <div class="footer-section">
+                                    <h3 class="footer-title">Contato</h3>
+                                    <div class="contact-info">
+                                        <p>Email: contato@tiregrip.com</p>
+                                        <p>Tel: (11) 9999-9999</p>
+                                        <p>WhatsApp: (11) 98888-8888</p>
+                                        <p class="business-hours">Seg-Sex: 8h às 18h</p>
+                                        <p>Sáb: 8h às 14h</p>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="footer-section">
+                                    <h3 class="footer-title">Links Úteis</h3>
+                                    <ul class="footer-links">
+                                        <li><a href="#" class="footer-link">FAQ</a></li>
+                                        <li><a href="#" class="footer-link">Sobre Nós</a></li>
+                                        <li><a href="#" class="footer-link">Política de Privacidade</a></li>
+                                        <li><a href="#" class="footer-link">Termos de Uso</a></li>
+                                        <li><a href="#" class="footer-link">Garantia</a></li>
+                                    </ul>
+                                </div>
+
+                                
+                                <div class="footer-section">
+                                    <h3 class="footer-title">Newsletter</h3>
+                                    <p class="newsletter-text">Receba ofertas exclusivas e novidades</p>
+                                    <div class="newsletter-form">
+                                        <input type="email" placeholder="Seu e-mail" class="newsletter-input">
+                                        <button class="newsletter-button">Assinar</button>
+                                    </div>
+                                </div>
+
+                                
+
+                            </div>
+
+                            
+                            <div class="footer-bottom">
+                                <p>© 2025 TireGrip. Todos os direitos reservados.</p>
+                            </div>
+                        </div>
+                    </footer>
+            `;
+        }
+
+        // Funções de navegação
+        function goToStep(step) {
+            currentStep = step;
+            renderCheckout();
+        }
+
+        function setPaymentMethod(method) {
+            paymentMethod = method;
+            renderCheckout();
+        }
+
+        function completeOrder() {
+            if (!paymentMethod) {
+                alert('Selecione uma forma de pagamento');
+                return;
+            }
+
+            console.log('Pedido finalizado:', {
+                items: checkoutItems,
+                paymentMethod,
+                totals: calculateTotals()
+            });
+
+            alert('Pedido realizado com sucesso! Obrigado pela compra.');
+            // COMENTÁRIO: onComplete() - implementar navegação para página de confirmação
+        }
+
+        // Inicializar o checkout
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCheckout();
+        });
+    </script>
+</body>
+</html>

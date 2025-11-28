@@ -1,0 +1,15 @@
+model\DAO\UsuarioDAO.class
+com\mycompany\tiregrip\JakartaRestConfiguration.class
+model\DAO\ItemPedidoDAO.class
+model\Endereco.class
+model\Pedido.class
+com\mycompany\tiregrip\resources\JakartaEE11Resource.class
+model\DAO\EnderecoDAO.class
+model\Usuario.class
+model\Carrinho.class
+model\DAO\PedidoDAO.class
+model\DAO\ProdutoDAO.class
+model\ItemPedido.class
+model\DAO\CarrinhoDAO.class
+model\Produto.class
+config\ConectaDB.class

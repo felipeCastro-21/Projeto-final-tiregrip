@@ -1,0 +1,550 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto - TireGrip</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Reset e configurações gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: black;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Back Button */
+        .back-button {
+            padding: 1.5rem 0;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: none;
+            color: #9CA3AF;
+            cursor: pointer;
+            transition: color 0.3s;
+            font-weight: 700;
+        }
+
+        .back-btn:hover {
+            color: #FF6B00;
+        }
+
+        .back-btn svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        /* Product Detail Section */
+        .product-detail {
+            padding-bottom: 4rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        @media (min-width: 1024px) {
+            .product-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Left Column - Image */
+        .product-image {
+            background-color: #1A1A1A;
+            border: 2px solid #333333;
+            display: flex;
+            align-items: start;
+            justify-content: center;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Right Column - Details */
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Title Section */
+        .product-title h1 {
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            font-size: 2rem;
+        }
+
+        .product-model {
+            color: #9CA3AF;
+        }
+
+        .title-divider {
+            height: 0.25rem;
+            width: 6rem;
+            background-color: #FF6B00;
+            margin-top: 1rem;
+        }
+
+        /* Price Section */
+        .price-section {
+            background-color: #1A1A1A;
+            border: 2px solid #FF6B00;
+            padding: 1.5rem;
+        }
+
+        .price-label {
+            color: #9CA3AF;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-value {
+            color: #FF6B00;
+            font-weight: 800;
+            font-size: 2.5rem;
+        }
+
+        .installment-info {
+            color: #9CA3AF;
+            margin-top: 0.5rem;
+        }
+
+        /* Buy Button */
+        .buy-button {
+            width: 100%;
+            background-color: #FF6B00;
+            color: black;
+            padding: 1rem 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 800;
+            font-size: 1.125rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .buy-button:hover {
+            background-color: #FFD000;
+        }
+
+        .buy-button svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        /* Specifications Section */
+        .specs-section {
+            background-color: #1A1A1A;
+            border: 2px solid #333333;
+            padding: 1.5rem;
+        }
+
+        .section-title {
+            color: #FF6B00;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .specs-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #333333;
+        }
+
+        .spec-label {
+            color: #9CA3AF;
+        }
+
+        .spec-value {
+            color: white;
+            font-weight: 700;
+        }
+
+        /* Features Section */
+        .features-section {
+            background-color: #1A1A1A;
+            border: 2px solid #333333;
+            padding: 1.5rem;
+        }
+
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+
+        .feature-icon {
+            color: #FF6B00;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+
+        .feature-icon svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .feature-text {
+            color: #D1D5DB;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #1A1A1A;
+            border-top: 2px solid #333;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            text-align: center;
+            color: #9CA3AF;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                
+                <button class="logo-button" id="home-button">
+                    <span class="logo-text-white">TIRE</span>
+                    <span class="logo-text-orange">GRIP</span>
+                </button>
+
+                
+                <nav class="desktop-nav">
+                    <a style="text-decoration: none" class="nav-button" href="home.html">Produtos</a>
+                </nav>
+
+                
+                <a href="./cart.html" class="cart-button" id="cart-button">
+                    <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="9" cy="21" r="1" stroke-width="2.5" />
+                        <circle cx="20" cy="21" r="1" stroke-width="2.5" />
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke-width="2.5" />
+                    </svg>
+                    <span class="cart-badge" id="cart-badge">0</span>
+                </a>
+
+                
+                <button class="mobile-menu-button">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <line x1="3" y1="6" x2="21" y2="6" stroke-width="2.5" />
+                        <line x1="3" y1="12" x2="21" y2="12" stroke-width="2.5" />
+                        <line x1="3" y1="18" x2="21" y2="18" stroke-width="2.5" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div id="product-detail-container">
+        
+    </div>
+
+    <script>
+        // Variável global para armazenar o produto
+        let product = null;
+
+        // Carregar produto do banco de dados
+        async function carregarProduto(produtoId) {
+            try {
+                const response = await fetch(`produtos/detalhes.jsp?id=${produtoId}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    alert('Produto não encontrado!');
+                    window.location.href = 'home.html';
+                    return null;
+                }
+                
+                return data;
+                
+            } catch (error) {
+                console.error('Erro ao carregar produto:', error);
+                alert('Erro ao carregar produto. Verifique se o servidor está rodando.');
+                window.location.href = 'home.html';
+                return null;
+            }
+        }
+
+        // Características padrão (podem ser personalizadas por produto no futuro)
+        const features = [
+            'Tecnologia de drenagem de água avançada',
+            'Composto de borracha de alta aderência',
+            'Baixo nível de ruído durante a condução',
+            'Maior durabilidade e resistência ao desgaste',
+            'Economia de combustível otimizada',
+            'Desempenho em todas as estações',
+        ];
+
+        // Função para renderizar a página de detalhes do produto
+        function renderProductDetail() {
+            if (!product) {
+                return;
+            }
+            
+            const container = document.getElementById('product-detail-container');
+            const installmentValue = (product.preco / 10).toFixed(2);
+            
+            // Montar especificações técnicas do banco de dados
+            const specifications = [
+                { label: 'Largura', value: product.largura || 'N/A' },
+                { label: 'Perfil', value: product.perfil || 'N/A' },
+                { label: 'Aro', value: product.aro || 'N/A' },
+                { label: 'Índice de Carga', value: product.indiceCarga || 'N/A' },
+                { label: 'Índice de Velocidade', value: product.indiceVelocidade || 'N/A' },
+                { label: 'Tipo', value: 'Radial' },
+            ];
+
+            container.innerHTML = `
+                
+                <div class="container back-button">
+                    <button class="back-btn" onclick="goBack()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <line x1="19" y1="12" x2="5" y2="12" stroke-width="2.5"/>
+                            <polyline points="12 19 5 12 12 5" stroke-width="2.5"/>
+                        </svg>
+                        Voltar
+                    </button>
+                </div>
+
+                
+                <section class="container product-detail">
+                    <div class="product-grid">
+                        
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1692464269951-3907a58b059e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXIlMjB0aXJlJTIwYmxhY2t8ZW58MXx8fHwxNzY0MTEzMDYyfDA&ixlib=rb-4.1.0&q=80&w=1080">
+                        </div>
+
+                        
+                        <div class="product-info">
+                            
+                            <div class="product-title">
+                                <h1>${product.nome}</h1>
+                                <p class="product-model">${product.modelo}</p>
+                                <div class="title-divider"></div>
+                            </div>
+
+                            
+                            <div class="price-section">
+                                <p class="price-label">Preço à vista no PIX</p>
+                                <p class="price-value">R$ ${product.preco.toFixed(2)}</p>
+                                <p class="installment-info">ou 10x de R$ ${installmentValue} sem juros</p>
+                            </div>
+
+                            
+                            <button class="buy-button" onclick="addToCart(${product.id}, ${product.preco})">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <circle cx="9" cy="21" r="1"/>
+                                    <circle cx="20" cy="21" r="1"/>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                                </svg>
+                                Comprar Agora
+                            </button>
+
+                            
+                            <div class="specs-section">
+                                <h2 class="section-title">Especificações Técnicas</h2>
+                                <div class="specs-list">
+                                    ${specifications.map(spec => `
+                                        <div class="spec-item">
+                                            <span class="spec-label">${spec.label}</span>
+                                            <span class="spec-value">${spec.value}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+
+                            
+                            <div class="features-section">
+                                <h2 class="section-title">Características</h2>
+                                <ul class="features-list">
+                                    ${features.map(feature => `
+                                        <li class="feature-item">
+                                            <div class="feature-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                                    <polyline points="20 6 9 17 4 12"/>
+                                                </svg>
+                                            </div>
+                                            <span class="feature-text">${feature}</span>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <footer class="footer" id="footer">
+                        <div class="container footer-container">
+                            <div class="footer-grid">
+                                
+                                <div class="footer-section">
+                                    <h3 class="footer-title">Contato</h3>
+                                    <div class="contact-info">
+                                        <p>Email: contato@tiregrip.com</p>
+                                        <p>Tel: (11) 9999-9999</p>
+                                        <p>WhatsApp: (11) 98888-8888</p>
+                                        <p class="business-hours">Seg-Sex: 8h às 18h</p>
+                                        <p>Sáb: 8h às 14h</p>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="footer-section">
+                                    <h3 class="footer-title">Links Úteis</h3>
+                                    <ul class="footer-links">
+                                        <li><a href="#" class="footer-link">FAQ</a></li>
+                                        <li><a href="#" class="footer-link">Sobre Nós</a></li>
+                                        <li><a href="#" class="footer-link">Política de Privacidade</a></li>
+                                        <li><a href="#" class="footer-link">Termos de Uso</a></li>
+                                        <li><a href="#" class="footer-link">Garantia</a></li>
+                                    </ul>
+                                </div>
+
+                                
+                                <div class="footer-section">
+                                    <h3 class="footer-title">Newsletter</h3>
+                                    <p class="newsletter-text">Receba ofertas exclusivas e novidades</p>
+                                    <div class="newsletter-form">
+                                        <input type="email" placeholder="Seu e-mail" class="newsletter-input">
+                                        <button class="newsletter-button">Assinar</button>
+                                    </div>
+                                </div>
+
+                                
+
+                            </div>
+
+                            
+                            <div class="footer-bottom">
+                                <p>© 2025 TireGrip. Todos os direitos reservados.</p>
+                            </div>
+                        </div>
+                    </footer>
+            `;
+        }
+
+        // Carregar quantidade de itens no carrinho
+        async function carregarQuantidadeCarrinho() {
+            try {
+                const response = await fetch('carrinho/visualizar.jsp');
+                const data = await response.json();
+                
+                if (!data.error && data.itens) {
+                    const totalItems = data.itens.reduce((sum, item) => sum + (item.quantidade || 0), 0);
+                    const cartBadge = document.getElementById('cart-badge');
+                    if (cartBadge) {
+                        cartBadge.textContent = totalItems;
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao carregar quantidade do carrinho:', error);
+            }
+        }
+
+        // Funções de interação
+        function goBack() {
+            window.location.href = "home.html";
+        }
+
+        async function addToCart(productId, preco) {
+            try {
+                const formData = new URLSearchParams();
+                formData.append('produtoId', productId);
+                formData.append('quantidade', '1');
+                
+                const response = await fetch('carrinho/adicionar.jsp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Recarregar quantidade real do carrinho
+                    await carregarQuantidadeCarrinho();
+                    
+                    // Feedback visual
+                    alert('Produto adicionado ao carrinho!');
+                } else {
+                    alert('Erro ao adicionar produto: ' + result.message);
+                }
+                
+            } catch (error) {
+                console.error('Erro ao adicionar ao carrinho:', error);
+                alert('Erro ao adicionar produto ao carrinho. Faça login primeiro!');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+
+            if (!productId) {
+                alert('Produto não especificado!');
+                window.location.href = 'home.html';
+                return;
+            }
+
+            // Carregar produto do banco de dados
+            product = await carregarProduto(productId);
+            
+            if (product) {
+                renderProductDetail();
+                carregarQuantidadeCarrinho();
+            }
+        });
+    </script>
+</body>
+
+</html>
